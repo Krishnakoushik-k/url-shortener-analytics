@@ -1,0 +1,12 @@
+{
+ "info":{"name":"URL Shortener Analytics API","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+ "variable":[{"key":"baseUrl","value":"http://localhost:8080"},{"key":"token","value":""},{"key":"urlId","value":"1"},{"key":"shortCode","value":"abc1234"}],
+ "item":[
+  {"name":"Register","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"email":"demo@example.com","password":"ChangeMe123!"}"},"url":"{{baseUrl}}/api/auth/register"}},
+  {"name":"Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"email":"demo@example.com","password":"ChangeMe123!"}"},"url":"{{baseUrl}}/api/auth/login"}},
+  {"name":"Create URL","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{token}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"originalUrl":"https://example.com/a/very/long/path","expiresAt":null}"},"url":"{{baseUrl}}/api/urls"}},
+  {"name":"List URLs","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":"{{baseUrl}}/api/urls?page=0&size=20"}},
+  {"name":"URL analytics","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{token}}"}],"url":"{{baseUrl}}/api/urls/{{urlId}}/analytics"}},
+  {"name":"Redirect","request":{"method":"GET","url":"{{baseUrl}}/r/{{shortCode}}"}}
+ ]
+}

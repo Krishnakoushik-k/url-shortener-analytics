@@ -1,0 +1,3 @@
+package com.portfolio.urlshortener.service;
+import org.springframework.data.redis.core.StringRedisTemplate; import org.springframework.stereotype.Service; import java.time.Duration; import java.util.Optional;
+@Service public class UrlCacheService {private final StringRedisTemplate redis;public UrlCacheService(StringRedisTemplate r){redis=r;}private String key(String code){return "url:"+code;}public Optional<String> get(String code){try{return Optional.ofNullable(redis.opsForValue().get(key(code)));}catch(Exception e){return Optional.empty();}}public void put(String code,String url,Duration ttl){try{redis.opsForValue().set(key(code),url,ttl);}catch(Exception ignored){}}public void evict(String code){try{redis.delete(key(code));}catch(Exception ignored){}}}

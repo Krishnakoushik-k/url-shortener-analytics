@@ -1,0 +1,3 @@
+package com.portfolio.urlshortener.service;
+import org.springframework.data.redis.core.StringRedisTemplate; import org.springframework.data.redis.core.script.DefaultRedisScript; import org.springframework.stereotype.Service; import java.time.Duration; import java.util.List;
+@Service public class RateLimitService {private final StringRedisTemplate redis;private final DefaultRedisScript<Long> script;public RateLimitService(StringRedisTemplate r,DefaultRedisScript<Long>s){redis=r;script=s;} public boolean allow(String key,int limit,Duration window){try{Long n=redis.execute(script,List.of("rate:"+key),String.valueOf(window.toSeconds()));return n!=null&&n<=limit;}catch(Exception e){return true; /* fail open; monitor Redis health and enforce edge limits */}}}
